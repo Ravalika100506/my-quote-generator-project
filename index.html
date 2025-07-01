@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Random Quote Generator</title>
+  <style>
+    body {
+      background-color: #f9f9f9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .quote-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .quote-text,
+    .quote-author {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeIn 0.6s forwards;
+    }
+
+    .quote-author {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    .quote-text {
+      font-size: 1.5rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quote-container">
+    <div class="quote-text" id="quoteText"></div>
+    <div class="quote-author" id="quoteAuthor"></div>
+    <button class="btn" onclick="generateQuote()">New Quote</button>
+  </div>
+
+  <script>
+    const quotes = [
+      { text: "Be yourself; everyone else is already taken.", author: "Oscar Wilde" },
+      { text: "Two things are infinite: the universe and human stupidity.", author: "Albert Einstein" },
+      { text: "So many books, so little time.", author: "Frank Zappa" },
+      { text: "A room without books is like a body without a soul.", author: "Marcus Tullius Cicero" },
+      { text: "In three words I can sum up everything I've learned about life: it goes on.", author: "Robert Frost" },
+      { text: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
+      { text: "You miss 100% of the shots you don’t take.", author: "Wayne Gretzky" },
+      { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" }
+    ];
+
+    function generateQuote() {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      const quote = quotes[randomIndex];
+
+      const quoteTextEl = document.getElementById("quoteText");
+      const quoteAuthorEl = document.getElementById("quoteAuthor");
+
+      // Reset animations
+      quoteTextEl.style.animation = "none";
+      quoteAuthorEl.style.animation = "none";
+
+      // Trigger reflow (restart animation)
+      void quoteTextEl.offsetWidth;
+      void quoteAuthorEl.offsetWidth;
+
+      // Set content
+      quoteTextEl.textContent = `"${quote.text}"`;
+      quoteAuthorEl.textContent = `— ${quote.author}`;
+
+      // Re-apply animation
+      quoteTextEl.style.animation = "fadeIn 0.6s forwards";
+      quoteAuthorEl.style.animation = "fadeIn 0.6s forwards";
+    }
+
+    window.onload = generateQuote;
+  </script>
+
+</body>
+</html>
